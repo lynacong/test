@@ -12,7 +12,15 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 import com.lowagie.text.Element;
 
+/**
+ 在使用的时候需要注意所选用的jar包 
+ 我用的是itext-asian-5.2.0.jar，
+ itextpdf-5.5.6.jar  这两个包能够实现上数方法
 
+ 如果有用其他的itextAsian.jar的情况下可能会出现jar包不匹配加载
+ 不到相应的方法的情况 这个要注意一下
+
+**/
 
 public class PDFWaterMaker {
 	private static int interval = -5;   
