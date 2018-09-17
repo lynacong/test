@@ -29,14 +29,12 @@ import java.util.*;
 
 
 /**
- * PDF 签名类
- * @author LY 2015-10-29
- *
+ * PDF 签名类  通过itextpdf来对pdf文件进行签名
+ * @author LYN 
  */
 public class SignPDF {
 	
 	private static final Logger logger = Logger.getLogger(SignPDF.class);
-
 
 	private static  String certInfo;
 
@@ -50,9 +48,9 @@ public class SignPDF {
 
 	/**
 	 * 指定字符位置PDF签名
-	 * @param pdfData
-	 * @param stampLocation
-	 * @param signaturePic
+	 * @param pdfData  pdf信息encode后的数据
+	 * @param stampLocation  签章位置信息
+	 * @param signaturePic  签章图片信息
 	 * @return
 	 */
 	public static String pdfSignByText(String admDivCode, String pdfData, String stampLocation, byte[] signaturePic) {
@@ -66,10 +64,14 @@ public class SignPDF {
 		InputStream data = null;
 		ByteArrayInputStream bais = null;
 		try {
+			//将pdf转换成流数据
 			fillInputStream = new ByteArrayInputStream(Arithmetic.decodeForByte(pdfData));
+			//读取数据流
 			reader = new PdfReader(fillInputStream);
 			fout = new ByteArrayOutputStream();
+			//创建签名域 
 			stp = PdfStamper.createSignature(reader, fout, '\0',null, true);
+
 			PdfSignatureAppearance sap = stp.getSignatureAppearance();
 			sap.setCertificationLevel(PdfSignatureAppearance.NOT_CERTIFIED); 
 			
@@ -89,6 +91,7 @@ public class SignPDF {
 			}else{
 				throw new EBillVoucherException("未找到签章位置");
 			}
+			//下面的是设置图片信息和证书信息
 			float x = Float.parseFloat(obj[0].toString()) + 10;
 			float y = Float.parseFloat(obj[1].toString());
 			Image img = Image.getInstance(signaturePic);
