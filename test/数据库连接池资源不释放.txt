@@ -1,0 +1,5 @@
+在工作中遇到的关于数据库连接资源不释放的问题
+用hibernate  session 创建的connection  session 创建的connection 不会自动释放连接导致在实际系统运行的时候出现 与数据库的连接超过配置的最大值 这时在做其他操作的时候就会出现Connection pool exhausted
+Connection pool exhausted - try increasing 'maxPoolSize' and/or 'borrowConnectionTimeout' on the DataSourceBean.这样的问题
+
+因为在配置的时候连接池中连接的释放是检测不到可用的连接时才会释放 ，所以只要服务在启动 所配置的idaltime 是不会起作用的  这时就要在建立连接完成以后手动的释放该连接
